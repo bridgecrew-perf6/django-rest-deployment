@@ -33,9 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
 
-
     steps:
-    - name: Clone project & setup python
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v3
       with:
