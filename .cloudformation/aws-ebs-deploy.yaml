@@ -1,0 +1,99 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  AppName:
+    Description: "Name of the application"
+    Type: String
+  AppDescription:
+      Description: "Name of the application"
+      Default: app description...
+      Type: String
+  SolutionStack:
+      Description: name of prebuilt environment provided by aws.
+      Type: String
+  S3BucketName: 
+    Description: "Enter the name of s3 bucket"
+    Type: String
+  DeploymentPackage: 
+    Description: "Enter the path of zip  file relative to s3 bucket"
+    Type: String
+  MaxInstanceCount: 
+    Description: "Enter the maximum number of instance in auto scaling group"
+    Default: '2'
+    Type: String
+
+
+Resources:
+  djangoApp:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      ApplicationName:
+        Ref: AppName
+      Description:
+        Ref: AppDescription
+  AppVersion:
+    Type: AWS::ElasticBeanstalk::ApplicationVersion
+    Properties:
+      ApplicationName:
+        Ref: djangoApp
+      Description: 
+        Ref: AppDescription
+      SourceBundle:
+        S3Bucket: 
+          Ref: S3BucketName
+        S3Key:
+          Ref: DeploymentPackage
+  AppConfigurationTemplate:
+    Type: AWS::ElasticBeanstalk::ConfigurationTemplate
+    Properties:
+      ApplicationName:
+        Ref: djangoApp
+      Description: Django REST API Configuration Template
+      OptionSettings:
+      - Namespace: aws:autoscaling:asg
+        OptionName: MinSize
+        Value: '1'
+      - Namespace: aws:autoscaling:asg
+        OptionName: MaxSize
+        Value: '6'
+      - Namespace: aws:elasticbeanstalk:environment
+        OptionName: EnvironmentType
+        Value: LoadBalanced
+      - Namespace: aws:autoscaling:launchconfiguration
+        OptionName: IamInstanceProfile
+        Value: !Ref MyInstanceProfile        
+      SolutionStackName:
+        Ref: SolutionStack
+  sampleEnvironment:
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties:
+      ApplicationName:
+        Ref: djangoApp
+      Description: AWS ElasticBeanstalk Sample Environment
+      TemplateName:
+        Ref: AppConfigurationTemplate
+      VersionLabel:
+        Ref: AppVersion
+  MyInstanceRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Description: Beanstalk EC2 role
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier
+  MyInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties: 
+      Roles:
+        - !Ref MyInstanceRole
+
