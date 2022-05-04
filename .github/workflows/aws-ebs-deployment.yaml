@@ -22,6 +22,8 @@ on:
 env:
   AWS_REGION: us-east-1
   AWS_S3_BUCKET_NAME: django-app-bucket-umer2001
+  APP_NAME: python-django
+  APP_DESCRIPTION: this app is a simple REST api for movies
   AWS_CLOUDFORMATION_STACK_NAME: python-django
   SOLUTION_STACK: 64bit Amazon Linux 2 v3.3.13 running Python 3.7
   ZIP_FILE_NAME: ${{ github.event.repository.name }}-${{ github.sha }}.zip
@@ -70,6 +72,8 @@ jobs:
         --capabilities CAPABILITY_IAM \
         --template-file ./.cloudformation/aws-ebs-deploy.yaml \
         --parameter-overrides "S3BucketName=${{env.AWS_S3_BUCKET_NAME}}" \
+        "AppName=${{env.APP_NAME}}" \
+        AppDescription=${{env.APP_DESCRIPTION}}" \
         "DeploymentPackage=${{env.ZIP_FILE_NAME}}" \
         "SolutionStack=${{env.SOLUTION_STACK}}"
 
