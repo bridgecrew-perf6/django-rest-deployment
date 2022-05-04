@@ -73,7 +73,7 @@ jobs:
         --template-file ./.cloudformation/aws-ebs-deploy.yaml \
         --parameter-overrides "S3BucketName=${{env.AWS_S3_BUCKET_NAME}}" \
         "AppName=${{env.APP_NAME}}" \
-        AppDescription=${{env.APP_DESCRIPTION}}" \
+        "AppDescription=${{env.APP_DESCRIPTION}}" \
         "DeploymentPackage=${{env.ZIP_FILE_NAME}}" \
         "SolutionStack=${{env.SOLUTION_STACK}}"
 
