@@ -69,9 +69,9 @@ jobs:
         aws cloudformation deploy --stack-name ${{ env.AWS_CLOUDFORMATION_STACK_NAME }} \
         --capabilities CAPABILITY_IAM \
         --template-file ./.cloudformation/aws-ebs-deploy.yaml \
-        --parameter-overrides S3BucketName=${{env.AWS_S3_BUCKET_NAME}} \
-        DeploymentPackage=${{env.ZIP_FILE_NAME}} \
-        SolutionStack=${{env.SOLUTION_STACK}}
+        --parameter-overrides "S3BucketName=${{env.AWS_S3_BUCKET_NAME}}" \
+        "DeploymentPackage=${{env.ZIP_FILE_NAME}}" \
+        "SolutionStack=${{env.SOLUTION_STACK}}"
 
 
 
