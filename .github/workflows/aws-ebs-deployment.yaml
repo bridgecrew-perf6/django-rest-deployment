@@ -1,0 +1,83 @@
+# This workflow will depluy python-django app to Elastic beanstalk using cloud formation,
+
+# WHAT TO DO ?
+# 1. clone the repo (checkout)
+# 2. create virtual environment
+# 3. install dependencies
+# 4. rum migrations
+# 5. create a supruser
+# 5. generate ststic files
+# 5. create a zip file
+# 6. create a s3 bucket & upload the zip file.
+# 7. deploy with the help of cloudformation
+
+
+name: Deploy to Amazon EBS
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: us-east-1
+  AWS_S3_BUCKET_NAME: django-app-bucket-umer2001
+  AWS_CLOUDFORMATION_STACK_NAME: python-django
+  SOLUTION_STACK: 64bit Amazon Linux 2 v3.3.13 running Python 3.7
+  ZIP_FILE_NAME: ${{ github.event.repository.name }}-${{ github.sha }}.zip
+ 
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: dev
+
+
+    steps:
+    - name: Clone project & setup python
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v3
+      with:
+        python-version: '3.7'
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Creating python virtual rnvironment & installing dependencies
+      run: python -m venv env && pip install -r requirements.txt
+
+    - name: Running migrations
+      run: python manage.py migrate
+
+    - name: Creating a superuser
+      run: python createSuperUser.py
+
+    - name: Genetrating ststic files (css,js, fonts)
+      run: python manage.py collectstatic
+
+    - name: Creating Archive for deployment
+      run: zip -r ${{ env.ZIP_FILE_NAME }} .
+
+    - name: Creating S3 bucket (if not created) & uploading the zip file
+      run: ./.cloudformation/create-bucket.sh {{env.ZIP_FILE_NAME}} {{env.AWS_S3_BUCKET_NAME}}
+
+    - name: Deploying the stack using cloudformation
+      run: |
+        aws cloudformation deploy --stack-name {{ env.AWS_CLOUDFORMATION_STACK_NAME }} \
+        --capabilities CAPABILITY_IAM \
+        --template-file ./.cloudformation/aws-ebs-deploy.yaml \
+        --parameters ParameterKey=S3BucketName,ParameterValue={{env.AWS_S3_BUCKET_NAME}} \
+        ParameterKey=DeploymentPackage,ParameterValue={{env.ZIP_FILE_NAME}} \
+        ParameterKey=SolutionStack,ParameterValue={{env.SOLUTION_STACK}}
+
+
+
+   
+
+
+    
