@@ -62,16 +62,16 @@ jobs:
       run: zip -r ${{ env.ZIP_FILE_NAME }} .
 
     - name: Creating S3 bucket (if not created) & uploading the zip file
-      run: ./.cloudformation/create-bucket.sh {{env.ZIP_FILE_NAME}} {{env.AWS_S3_BUCKET_NAME}}
+      run: ./.cloudformation/create-bucket.sh ${{env.ZIP_FILE_NAME}} ${{env.AWS_S3_BUCKET_NAME}}
 
     - name: Deploying the stack using cloudformation
       run: |
-        aws cloudformation deploy --stack-name {{ env.AWS_CLOUDFORMATION_STACK_NAME }} \
+        aws cloudformation deploy --stack-name ${{ env.AWS_CLOUDFORMATION_STACK_NAME }} \
         --capabilities CAPABILITY_IAM \
         --template-file ./.cloudformation/aws-ebs-deploy.yaml \
-        --parameters ParameterKey=S3BucketName,ParameterValue={{env.AWS_S3_BUCKET_NAME}} \
-        ParameterKey=DeploymentPackage,ParameterValue={{env.ZIP_FILE_NAME}} \
-        ParameterKey=SolutionStack,ParameterValue={{env.SOLUTION_STACK}}
+        --parameters ParameterKey=S3BucketName,ParameterValue=${{env.AWS_S3_BUCKET_NAME}} \
+        ParameterKey=DeploymentPackage,ParameterValue=${{env.ZIP_FILE_NAME}} \
+        ParameterKey=SolutionStack,ParameterValue=${{env.SOLUTION_STACK}}
 
 
 
