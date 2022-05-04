@@ -64,7 +64,7 @@ Resources:
         Value: !Ref MyInstanceProfile        
       SolutionStackName:
         Ref: SolutionStack
-  sampleEnvironment:
+  Environment:
     Type: AWS::ElasticBeanstalk::Environment
     Properties:
       ApplicationName:
@@ -97,3 +97,7 @@ Resources:
       Roles:
         - !Ref MyInstanceRole
 
+Outputs:
+  EndpointURL:
+    Description: the link of deployed application
+    Value: !GetAtt Environment.EndpointURL
