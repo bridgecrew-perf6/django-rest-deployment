@@ -27,7 +27,7 @@ env:
   AWS_CLOUDFORMATION_STACK_NAME: python-django
   SOLUTION_STACK: 64bit Amazon Linux 2 v3.3.13 running Python 3.7
   ZIP_FILE_NAME: ${{ github.event.repository.name }}-${{ github.sha }}.zip
-  SSLCertRef: arn:aws:acm:us-east-1:621815293864:certificate/d0ffe643-0f22-44c0-95ad-97789048a2b2
+  SSL_CERT_REF: arn:aws:acm:us-east-1:621815293864:certificate/d0ffe643-0f22-44c0-95ad-97789048a2b2
  
 
 jobs:
@@ -76,7 +76,8 @@ jobs:
         "AppName=${{env.APP_NAME}}" \
         "AppDescription=${{env.APP_DESCRIPTION}}" \
         "DeploymentPackage=${{env.ZIP_FILE_NAME}}" \
-        "SolutionStack=${{env.SOLUTION_STACK}}"
+        "SolutionStack=${{env.SOLUTION_STACK}}" \
+        "SSLCertRef=${{env.SSL_CERT_REF}}"
 
     - name: Getting result...
       run: aws cloudformation describe-stacks --stack-name ${{ env.AWS_CLOUDFORMATION_STACK_NAME }} \
