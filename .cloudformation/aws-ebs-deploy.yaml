@@ -21,6 +21,9 @@ Parameters:
     Description: "Enter the maximum number of instance in auto scaling group"
     Default: '2'
     Type: String
+  SSLCertRef:
+    Description: ARN of Certificate uploaded in ACM.
+    Type: String
 
 
 Resources:
@@ -56,12 +59,25 @@ Resources:
       - Namespace: aws:autoscaling:asg
         OptionName: MaxSize
         Value: '6'
+      - Namespace: aws:autoscaling:launchconfiguration
+        OptionName: IamInstanceProfile
+        Value: !Ref MyInstanceProfile
       - Namespace: aws:elasticbeanstalk:environment
         OptionName: EnvironmentType
         Value: LoadBalanced
-      - Namespace: aws:autoscaling:launchconfiguration
-        OptionName: IamInstanceProfile
-        Value: !Ref MyInstanceProfile        
+      - Namespace: aws:elb:listener:443
+        OptionName: ListenerProtocol
+        Value: HTTPS
+      - Namespace: aws:elb:listener:443
+        OptionName: InstancePort
+        Value: 80
+      - Namespace: aws:elb:listener:443
+        OptionName: InstanceProtocol
+        Value: HTTP
+      - Namespace: aws:elb:listener:443
+        OptionName: SSLCertificateId
+        Value:
+          Ref: SSLCertRef       
       SolutionStackName:
         Ref: SolutionStack
   Environment:
