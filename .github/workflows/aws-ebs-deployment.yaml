@@ -80,7 +80,8 @@ jobs:
         "SSLCertRef=${{env.SSL_CERT_REF}}"
 
     - name: Getting result...
-      run: aws cloudformation describe-stacks --stack-name ${{ env.AWS_CLOUDFORMATION_STACK_NAME }} \
+      run: |
+        aws cloudformation describe-stacks --stack-name ${{ env.AWS_CLOUDFORMATION_STACK_NAME }} \
         --query "Stacks[0].Outputs"
 
    
