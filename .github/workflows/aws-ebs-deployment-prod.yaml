@@ -12,7 +12,7 @@
 # 7. deploy with the help of cloudformation
 
 
-name: Deploy to Amazon EBS
+name: Deploy to Amazon EBS (Prod)
 
 on:
   push:
@@ -59,9 +59,6 @@ jobs:
 
     - name: Creating python virtual rnvironment & installing dependencies
       run: python -m venv env && pip install -r requirements.txt
-
-    - name: Creating a superuser
-      run: python createSuperUser.py
 
     - name: Genetrating ststic files (css,js, fonts)
       run: python manage.py collectstatic
