@@ -79,7 +79,7 @@ Resources:
     Properties:
       DBName: !Ref DBName
       DBSecurityGroups:
-      - Ref: DBSecurityGroup
+      - !Ref: DBSecurityGroup
       Engine: 
         Ref: DBEngine
       EngineVersion: 
