@@ -26,7 +26,8 @@ SECRET_KEY = 'ftov1!91yf@7f7&g2%*@0_e^)ac&f&9jeloc@#v76#^b1dhbl#'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'pyth-samp-1q8apwwhddxa3.eba-pw3qwakg.us-east-1.elasticbeanstalk.com'
+    'pyth-samp-1q8apwwhddxa3.eba-pw3qwakg.us-east-1.elasticbeanstalk.com',
+    'awseb-e-t-AWSEBLoa-181G5MVMKCUH4-947724633.us-east-1.elb.amazonaws.com'
 ]
 
 REST_FRAMEWORK = {
@@ -89,11 +90,16 @@ WSGI_APPLICATION = 'api_crud.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+# TODO: Change to ENV variables
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USERNAME'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': os.environ['DB_HOST'],
+        'PORT': os.environ['DB_PORT'],
     }
 }
 
