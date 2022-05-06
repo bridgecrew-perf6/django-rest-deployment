@@ -69,7 +69,7 @@ Resources:
     Properties:
       GroupDescription: Allow ingress on port 5432. 
       SecurityGroupIngress:
-        - IpProtocol: tcp
+        - IpProtocol: -1
           ToPort: 5432
           CidrIp: 0.0.0.0/0
 
