@@ -51,11 +51,11 @@ Parameters:
     Type: String
   DBRetensionPolicy:
     Description: Retain, Snapshot or Delete.
-    Default: Snapshot
+    Default: "Snapshot"
     AllowedValues:
-      - Snapshot
-      - Retain
-      - Delete
+      - "Snapshot"
+      - "Retain"
+      - "Delete"
     Type: String
 
 
