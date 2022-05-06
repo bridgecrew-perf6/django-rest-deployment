@@ -109,3 +109,7 @@ venv.bak/
 
 # Database
 db.sqlite3
+
+# certs
+*.pem
+*.crt
