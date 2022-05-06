@@ -112,7 +112,7 @@ Resources:
         OptionName: DB_NAME
         Value: !Ref DBName
       - Namespace: aws:elasticbeanstalk:application:environment
-        OptionName: DB_USERNAME
+        OptionName: DB_USER_NAME
         Value: !Ref DBUserName
       - Namespace: aws:elasticbeanstalk:application:environment
         OptionName: DB_PASSWORD
