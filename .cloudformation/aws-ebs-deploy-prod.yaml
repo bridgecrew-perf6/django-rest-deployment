@@ -64,13 +64,22 @@ Parameters:
 
 
 Resources:
+  DBSecurityGroup:
+  Type: AWS::EC2::SecurityGroup
+  Properties:
+    GroupDescription: Allow ingress on port 5432 
+    SecurityGroupIngress:
+      - IpProtocol: tcp
+        ToPort: 5432
+        CidrIp: 0.0.0.0/0
+
   AppDB:
     Type: AWS::RDS::DBInstance
+    DependsOn: DBSecurityGroup
     Properties:
       DBName: !Ref DBName
       DBSecurityGroups:
-      - Ref: MyDbSecurityByEC2SecurityGroup
-      - Ref: MyDbSecurityByCIDRIPGroup
+      - Ref: DBSecurityGroup
       Engine: 
         Ref: DBEngine
       EngineVersion: 
