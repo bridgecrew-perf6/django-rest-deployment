@@ -28,7 +28,7 @@ env:
   SOLUTION_STACK: 64bit Amazon Linux 2 v3.3.13 running Python 3.7
   ZIP_FILE_NAME: ${{ github.event.repository.name }}-${{ github.sha }}.zip
   SSL_CERT_REF: arn:aws:acm:us-east-1:621815293864:certificate/d0ffe643-0f22-44c0-95ad-97789048a2b2
-  DB_NAME: python-django-db
+  DB_NAME: PythonDjangoDB
   DB_ENGINE: postgres
   DB_ENGINE_VERSION: '12.7'
   DB_LICENCE_MODEL: postgresql-license
