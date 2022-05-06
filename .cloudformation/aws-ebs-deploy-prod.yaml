@@ -67,6 +67,7 @@ Resources:
   DBSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
+      GroupName: DBSecurityGroup
       GroupDescription: Allow ingress on port 5432. 
       SecurityGroupIngress:
         - IpProtocol: -1
@@ -79,7 +80,7 @@ Resources:
     Properties:
       DBName: !Ref DBName
       DBSecurityGroups:
-      - !Ref: DBSecurityGroup
+      - Ref: DBSecurityGroup
       Engine: 
         Ref: DBEngine
       EngineVersion: 
