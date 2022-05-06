@@ -30,6 +30,7 @@ env:
   SSL_CERT_REF: arn:aws:acm:us-east-1:621815293864:certificate/d0ffe643-0f22-44c0-95ad-97789048a2b2
   DB_NAME: python-django-db
   DB_ENGINE: postgres
+  DB_ENGINE_VERSION: '12.7'
   DB_LICENCE_MODEL: postgresql-license
   DB_INSTANCE_SIZE: db.t2.small
   DB_CAPACITY: '5'
@@ -82,6 +83,7 @@ jobs:
         "SSLCertRef=${{env.SSL_CERT_REF}}" \
         "DBName=${{env.DB_NAME}}" \
         "DBEngine=${{env.DB_ENGINE}}" \
+        "DBEngineVersion=${{env.DB_ENGINE_VERSION}}" \
         "DBLicenseModel=${{env.DB_LICENCE_MODEL}}" \
         "DBInstanceSize=${{env.DB_INSTANCE_SIZE}}" \
         "DBCapacity=${{env.DB_CAPACITY}}" \

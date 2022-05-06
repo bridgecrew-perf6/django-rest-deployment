@@ -31,6 +31,10 @@ Parameters:
     Description: choose from this link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-rds-database-instance.html.
     Default: 'postgres'
     Type: String
+  DBEngineVersion:
+    Description: database engine version use command aws rds describe-db-engine-versions  --engine postgres.
+    Default: '12.7'
+    Type: String
   DBLicenseModel:
     Description: choose from this link https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-rds-database-instance.html.
     Default: 'postgresql-license'
@@ -66,6 +70,8 @@ Resources:
       DBName: !Ref DBName
       Engine: 
         Ref: DBEngine
+      EngineVersion: 
+        Ref: DBEngineVersion
       LicenseModel: 
         Ref: DBLicenseModel
       AllocatedStorage: 
