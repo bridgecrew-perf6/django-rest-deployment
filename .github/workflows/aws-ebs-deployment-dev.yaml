@@ -14,17 +14,14 @@
 
 name: Deploy to Amazon EBS
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 env:
   AWS_REGION: us-east-1
   AWS_S3_BUCKET_NAME: django-app-bucket-umer2001
-  APP_NAME: python-django
+  APP_NAME: python-django-dev
   APP_DESCRIPTION: this app is a simple REST api for movies
-  AWS_CLOUDFORMATION_STACK_NAME: python-django
+  AWS_CLOUDFORMATION_STACK_NAME: python-django-dev
   SOLUTION_STACK: 64bit Amazon Linux 2 v3.3.13 running Python 3.7
   ZIP_FILE_NAME: ${{ github.event.repository.name }}-${{ github.sha }}.zip
   SSL_CERT_REF: arn:aws:acm:us-east-1:621815293864:certificate/d0ffe643-0f22-44c0-95ad-97789048a2b2
@@ -71,7 +68,7 @@ jobs:
       run: |
         aws cloudformation deploy --stack-name ${{ env.AWS_CLOUDFORMATION_STACK_NAME }} \
         --capabilities CAPABILITY_IAM \
-        --template-file ./.cloudformation/aws-ebs-deploy.yaml \
+        --template-file ./.cloudformation/aws-ebs-deploy-dev.yaml \
         --parameter-overrides "S3BucketName=${{env.AWS_S3_BUCKET_NAME}}" \
         "AppName=${{env.APP_NAME}}" \
         "AppDescription=${{env.APP_DESCRIPTION}}" \
