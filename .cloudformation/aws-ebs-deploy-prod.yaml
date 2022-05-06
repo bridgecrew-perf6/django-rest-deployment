@@ -64,10 +64,10 @@ Parameters:
 
 
 Resources:
-  DBSecurityGroup:
+  AppDBSG:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: DBSecurityGroup
+      GroupName: appDBSG
       GroupDescription: Allow ingress on port 5432. 
       SecurityGroupIngress:
         - IpProtocol: -1
@@ -76,11 +76,11 @@ Resources:
 
   AppDB:
     Type: AWS::RDS::DBInstance
-    DependsOn: DBSecurityGroup
+    DependsOn: AppDBSG
     Properties:
       DBName: !Ref DBName
       DBSecurityGroups:
-      - Ref: DBSecurityGroup
+      - Ref: AppDBSG
       Engine: 
         Ref: DBEngine
       EngineVersion: 
