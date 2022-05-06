@@ -35,7 +35,7 @@ env:
   DB_CAPACITY: '5'
   DB_USER_NAME: ${{ secrets.DB_USER_NAME }}
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  DB_RENTENSION_POLICY: "Snapshot"
+  # DB_RENTENSION_POLICY: "Snapshot"
  
 
 jobs:

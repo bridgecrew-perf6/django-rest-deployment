@@ -49,14 +49,14 @@ Parameters:
   DBPassword:
     Description: password for the user of database.
     Type: String
-  DBRetensionPolicy:
-    Description: Retain, Snapshot or Delete.
-    Default: "Snapshot"
-    AllowedValues:
-      - "Snapshot"
-      - "Retain"
-      - "Delete"
-    Type: String
+  # DBRetensionPolicy:
+  #   Description: Retain, Snapshot or Delete.
+  #   Default: "Snapshot"
+  #   AllowedValues:
+  #     - "Snapshot"
+  #     - "Retain"
+  #     - "Delete"
+  #   Type: String
 
 
 Resources:
@@ -76,8 +76,7 @@ Resources:
         Ref: DBUserName
       MasterUserPassword: 
         Ref: DBPassword
-    DeletionPolicy: 
-      Ref: DBRetensionPolicy
+    DeletionPolicy: Retain  #TODO: make change if required
 
   djangoApp:
     Type: AWS::ElasticBeanstalk::Application
