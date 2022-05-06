@@ -68,6 +68,9 @@ Resources:
     Type: AWS::RDS::DBInstance
     Properties:
       DBName: !Ref DBName
+      DBSecurityGroups:
+      - Ref: MyDbSecurityByEC2SecurityGroup
+      - Ref: MyDbSecurityByCIDRIPGroup
       Engine: 
         Ref: DBEngine
       EngineVersion: 
