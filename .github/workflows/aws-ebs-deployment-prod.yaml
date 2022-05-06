@@ -30,7 +30,7 @@ env:
   SSL_CERT_REF: arn:aws:acm:us-east-1:621815293864:certificate/d0ffe643-0f22-44c0-95ad-97789048a2b2
   DB_NAME: python-django-db
   DB_ENGINE: postgres
-  DB_LICENCE_MODEL: PostgreSQL - postgresql-license
+  DB_LICENCE_MODEL: postgresql-license
   DB_INSTANCE_SIZE: db.t2.small
   DB_CAPACITY: '5'
   DB_USER_NAME: ${{ secrets.DB_USER_NAME }}
@@ -86,8 +86,7 @@ jobs:
         "DBInstanceSize=${{env.DB_INSTANCE_SIZE}}" \
         "DBCapacity=${{env.DB_CAPACITY}}" \
         "DBUserName=${{env.DB_USER_NAME}}" \
-        "DBPassword=${{env.DB_PASSWORD}}" \
-        "DBRetensionPolicy=${{env.DB_RENTENSION_POLICY}}"
+        "DBPassword=${{env.DB_PASSWORD}}" 
 
     - name: Getting result...
       run: |
