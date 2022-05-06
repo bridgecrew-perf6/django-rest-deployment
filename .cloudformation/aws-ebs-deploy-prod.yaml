@@ -102,7 +102,6 @@ Resources:
 
   AppDB:
     Type: AWS::RDS::DBInstance
-    DependsOn: AppDBSG
     Properties:
       DBName: !Ref DBName
       VPCSecurityGroups: !If 
